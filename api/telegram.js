@@ -1,4 +1,5 @@
 export default function handleTelegramWebhook(req, res) {
+	console.log("çalışması lazım");
 	const TelegramBot = require("node-telegram-bot-api");
 	const express = require("express");
 	require("dotenv").config();
@@ -56,6 +57,7 @@ export default function handleTelegramWebhook(req, res) {
 
 	bot.onText(/\/start@game_tabu_bot/, (msg) => {
 		// Send message with inline keyboard
+		console.log("start@tabbubot komutunu okuyor");
 		lastWinnerId = msg.from.id;
 		const chatId = msg.chat.id;
 		gameOn = true;
@@ -108,6 +110,7 @@ export default function handleTelegramWebhook(req, res) {
 	});
 
 	bot.on("message", (msg) => {
+		console.log("mesajları okuyor");
 		if (msg.chat.type === "group" || msg.chat.type === "supergroup") {
 			const chatId = msg.chat.id;
 			if (gameOn) {
