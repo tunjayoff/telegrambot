@@ -36,7 +36,7 @@ const opts = {
 };
 
 //read words from file
-fs.readFile("words.txt", "utf8", function (err, data) {
+fs.readFile("./words.txt", "utf8", function (err, data) {
 	if (err) throw err;
 	words = data.toString().split("\r\n");
 	for (let i = 0; i < words.length; i++) {
