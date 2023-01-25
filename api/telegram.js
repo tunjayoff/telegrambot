@@ -36,12 +36,9 @@ const opts = {
 };
 
 // SETUP THE WEBHOOK
-app.post("/api/telegram", (req, res) => {
-	bot.processUpdate(req.body);
-	res.sendStatus(200);
-});
+app.post("/api/telegram", bot.webhookCallback("/api/telegram"));
 
-bot.setWebHook("/api/telegram", {});
+bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {});
 
 bot.onText(/\/start@game_tabu_bot/, (msg) => {
 	// Send message with inline keyboard
