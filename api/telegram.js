@@ -1,130 +1,135 @@
-console.log("çalışması lazım");
-const TelegramBot = require("node-telegram-bot-api");
-const express = require("express");
-require("dotenv").config();
-const token = process.env.tt;
-const bot = new TelegramBot(token);
+exports.startTelegramBot = function () {
+	console.log("çalışması lazım");
+	const TelegramBot = require("node-telegram-bot-api");
+	const express = require("express");
+	require("dotenv").config();
+	const token = process.env.tt;
+	const bot = new TelegramBot(token);
 
-const app = express();
+	const app = express();
 
-let gameOn = false;
-let currentWord = null;
-let words = ["a", "b", "c", "d", "e"];
-let lastWinnerId;
-const opts = {
-	//OPTION BUTTONS
-	reply_markup: {
-		inline_keyboard: [
-			[
-				{
-					text: "kelimeyi göster",
-					callback_data: "show_word",
-				},
-				{
-					text: "pas geç",
-					callback_data: "pass",
-				},
+	let gameOn = false;
+	let currentWord = null;
+	let words = ["a", "b", "c", "d", "e"];
+	let lastWinnerId;
+	const opts = {
+		//OPTION BUTTONS
+		reply_markup: {
+			inline_keyboard: [
+				[
+					{
+						text: "kelimeyi göster",
+						callback_data: "show_word",
+					},
+					{
+						text: "pas geç",
+						callback_data: "pass",
+					},
+				],
+				[
+					{
+						text: "Oyunu bitir",
+						callback_data: "end_game",
+					},
+				],
 			],
-			[
-				{
-					text: "Oyunu bitir",
-					callback_data: "end_game",
-				},
-			],
-		],
-	},
-};
+		},
+	};
 
-// SETUP THE WEBHOOK
-app.post("/api/telegram", (req, res) => {
-	bot.processUpdate(req.body);
-	res.sendStatus(200);
-});
+	// SETUP THE WEBHOOK
+	app.post("/api/telegram", (req, res) => {
+		bot.processUpdate(req.body);
+		res.sendStatus(200);
+	});
 
-bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {});
+	bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {});
 
-bot.onText(/\/start@game_tabu_bot/, (msg) => {
-	// Send message with inline keyboard
-	console.log("start@tabbubot komutunu okuyor");
-	lastWinnerId = msg.from.id;
-	const chatId = msg.chat.id;
-	gameOn = true;
-	currentWord = words[Math.floor(Math.random() * words.length)];
-	bot.sendMessage(chatId, "Kelime oyunu başladı!", opts);
-});
-
-bot.on("callback_query", (callback) => {
-	const callbackData = callback.data;
-	const user = callback.from;
-	const chatId = callback.message.chat.id; // Add this line to define chatId
-	if (callbackData === "show_word") {
-		if (user.id === lastWinnerId) {
-			bot.answerCallbackQuery(callback.id, {
-				text: "Kelime: " + currentWord,
-				show_alert: true,
-			});
-		} else {
-			bot.answerCallbackQuery(callback.id, {
-				text: "Senin sıran değil",
-				show_alert: true,
-			});
-		}
-	}
-	if (callbackData === "pass") {
-		if (user.id === lastWinnerId) {
-			bot.sendMessage(chatId, "Kelime pas geçildi");
-			currentWord = words[Math.floor(Math.random() * words.length)];
-			bot.answerCallbackQuery(callback.id, {
-				text: "Yeni kelime: " + currentWord,
-				show_alert: true,
-			});
-		} else {
-			bot.answerCallbackQuery(callback.id, {
-				text: "Yalnızca sunan kişi pas geçebilir!",
-				show_alert: true,
-			});
-		}
-	}
-	if (callbackData === "end_game") {
-		if (user.id === lastWinnerId) {
-			gameOn = false;
-			bot.sendMessage(chatId, "Kelime oyunu durduruldu.");
-			bot.answerCallbackQuery(callback.id, {
-				text: "Oyun sonlandırıldı",
-				show_alert: true,
-			});
-		}
-	}
-});
-
-bot.on("message", (msg) => {
-	console.log("mesajları okuyor");
-	if (msg.chat.type === "group" || msg.chat.type === "supergroup") {
+	bot.onText(/\/start@game_tabu_bot/, (msg) => {
+		// Send message with inline keyboard
+		console.log("start@tabbubot komutunu okuyor");
+		lastWinnerId = msg.from.id;
 		const chatId = msg.chat.id;
-		if (gameOn) {
-			if (
-				msg.text.toLowerCase().includes(currentWord.toLowerCase()) &&
-				msg.from.id != lastWinnerId
-			) {
-				let userName;
-				if (msg.from.username) {
-					userName = "@" + msg.from.username;
-				} else {
-					userName = msg.from.first_name;
-				}
+		gameOn = true;
+		currentWord = words[Math.floor(Math.random() * words.length)];
+		bot.sendMessage(chatId, "Kelime oyunu başladı!", opts);
+	});
 
-				bot.sendMessage(
-					chatId,
-					`${userName}  kelimeyi buldu!\nKelime ${currentWord} idi.\nSıra sende anlat bakalım!`,
-					opts
-				);
-				currentWord = words[Math.floor(Math.random() * words.length)];
-				lastWinnerId = msg.from.id;
+	bot.on("callback_query", (callback) => {
+		const callbackData = callback.data;
+		const user = callback.from;
+		const chatId = callback.message.chat.id; // Add this line to define chatId
+		if (callbackData === "show_word") {
+			if (user.id === lastWinnerId) {
+				bot.answerCallbackQuery(callback.id, {
+					text: "Kelime: " + currentWord,
+					show_alert: true,
+				});
+			} else {
+				bot.answerCallbackQuery(callback.id, {
+					text: "Senin sıran değil",
+					show_alert: true,
+				});
 			}
 		}
-	}
-});
+		if (callbackData === "pass") {
+			if (user.id === lastWinnerId) {
+				bot.sendMessage(chatId, "Kelime pas geçildi");
+				currentWord = words[Math.floor(Math.random() * words.length)];
+				bot.answerCallbackQuery(callback.id, {
+					text: "Yeni kelime: " + currentWord,
+					show_alert: true,
+				});
+			} else {
+				bot.answerCallbackQuery(callback.id, {
+					text: "Yalnızca sunan kişi pas geçebilir!",
+					show_alert: true,
+				});
+			}
+		}
+		if (callbackData === "end_game") {
+			if (user.id === lastWinnerId) {
+				gameOn = false;
+				bot.sendMessage(chatId, "Kelime oyunu durduruldu.");
+				bot.answerCallbackQuery(callback.id, {
+					text: "Oyun sonlandırıldı",
+					show_alert: true,
+				});
+			}
+		}
+	});
 
-app.listen(process.env.PORT || 3000, () => {
-	console.log("Server is running");
-});
+	bot.on("message", (msg) => {
+		console.log("mesajları okuyor");
+		if (msg.chat.type === "group" || msg.chat.type === "supergroup") {
+			const chatId = msg.chat.id;
+			if (gameOn) {
+				if (
+					msg.text
+						.toLowerCase()
+						.includes(currentWord.toLowerCase()) &&
+					msg.from.id != lastWinnerId
+				) {
+					let userName;
+					if (msg.from.username) {
+						userName = "@" + msg.from.username;
+					} else {
+						userName = msg.from.first_name;
+					}
+
+					bot.sendMessage(
+						chatId,
+						`${userName}  kelimeyi buldu!\nKelime ${currentWord} idi.\nSıra sende anlat bakalım!`,
+						opts
+					);
+					currentWord =
+						words[Math.floor(Math.random() * words.length)];
+					lastWinnerId = msg.from.id;
+				}
+			}
+		}
+	});
+
+	app.listen(process.env.PORT || 3000, () => {
+		console.log("Server is running");
+	});
+};
