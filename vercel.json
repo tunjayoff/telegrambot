@@ -3,13 +3,11 @@
 	"builds": [
 		{
 			"src": "index.js",
-			"use": "@now/node",
-			"timeout": 15
+			"use": "@now/node"
 		},
 		{
 			"src": "/api/telegram.js",
-			"use": "@now/node",
-			"timeout": 15
+			"use": "@now/node"
 		}
 	],
 	"routes": [
