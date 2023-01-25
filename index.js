@@ -109,7 +109,27 @@ bot.on("callback_query", (callback) => {
 bot.on("message", (msg) => {
 	if (msg.chat.type === "group" || msg.chat.type === "supergroup") {
 		const chatId = msg.chat.id;
-		// Handle message
+		if (gameOn) {
+			if (
+				msg.text.toLowerCase().includes(currentWord.toLowerCase()) &&
+				msg.from.id != lastWinnerId
+			) {
+				let userName;
+				if (msg.from.username) {
+					userName = "@" + msg.from.username;
+				} else {
+					userName = msg.from.first_name;
+				}
+
+				bot.sendMessage(
+					chatId,
+					`${userName}  kelimeyi buldu!\nKelime ${currentWord} idi.\nSıra sende anlat bakalım!`,
+					opts
+				);
+				currentWord = words[Math.floor(Math.random() * words.length)];
+				lastWinnerId = msg.from.id;
+			}
+		}
 	}
 });
 
