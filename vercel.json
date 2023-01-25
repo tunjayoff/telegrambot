@@ -4,9 +4,21 @@
 		{
 			"src": "index.js",
 			"use": "@now/node"
+		},
+		{
+			"src": "pages/api/*.js",
+			"use": "@now/node"
 		}
 	],
 	"routes": [
+		{
+			"src": "/api/telegram",
+			"dest": "pages/api/telegram.js"
+		},
+		{
+			"src": "/api/(.*)",
+			"dest": "pages/api/[1].js"
+		},
 		{
 			"src": "/(.*)",
 			"dest": "index.js"

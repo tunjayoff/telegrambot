@@ -1,7 +1,6 @@
 {
-	"name": "test",
+	"name": "telegrambot",
 	"version": "1.0.0",
-	"description": "",
 	"main": "index.js",
 	"engines": {
 		"node": "18.x"
@@ -17,5 +16,15 @@
 		"express": "^4.18.2",
 		"fs": "^0.0.1-security",
 		"node-telegram-bot-api": "^0.61.0"
-	}
+	},
+	"devDependencies": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tunjayoff/telegrambot.git"
+	},
+	"bugs": {
+		"url": "https://github.com/tunjayoff/telegrambot/issues"
+	},
+	"homepage": "https://github.com/tunjayoff/telegrambot#readme",
+	"description": ""
 }
