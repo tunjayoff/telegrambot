@@ -1,7 +1,7 @@
 const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
 
-const telegram = require("./telegram");
+const telegram = require("./api/telegram");
 app.use("/api/telegram", telegram);
 
 require("dotenv").config();
