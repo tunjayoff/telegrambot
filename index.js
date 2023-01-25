@@ -2,13 +2,13 @@ const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
 
 const telegram = require("./api/telegram");
-app.use("/api/telegram", telegram);
 
 require("dotenv").config();
 const token = process.env.tt;
 const bot = new TelegramBot(token);
 
 const app = express();
+app.use("/api/telegram", telegram);
 
 let gameOn = false;
 let currentWord = null;
