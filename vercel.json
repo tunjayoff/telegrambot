@@ -6,18 +6,14 @@
 			"use": "@now/node"
 		},
 		{
-			"src": "pages/api/*.js",
+			"src": "/api/telegram.js",
 			"use": "@now/node"
 		}
 	],
 	"routes": [
 		{
 			"src": "/api/telegram",
-			"dest": "pages/api/telegram.js"
-		},
-		{
-			"src": "/api/(.*)",
-			"dest": "pages/api/[1].js"
+			"dest": "/api/telegram.js"
 		},
 		{
 			"src": "/(.*)",
