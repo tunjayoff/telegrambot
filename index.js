@@ -45,11 +45,11 @@ fs.readFile("words.txt", "utf8", function (err, data) {
 });
 
 // SETUP THE WEBHOOK
-app.post("/your-webhook-url", (req, res) => {
+app.post("https://telegrambot-dusky.vercel.app/", (req, res) => {
 	bot.processUpdate(req.body);
 	res.sendStatus(200);
 });
-bot.setWebHook("https://your-url.com/your-webhook-url", {
+bot.setWebHook("https://telegrambot-dusky.vercel.app/", {
 	certificate: "path/to/certificate.pem",
 });
 
