@@ -45,12 +45,12 @@ const opts = {
 }); */
 
 // SETUP THE WEBHOOK
-app.post("/api/", (req, res) => {
+app.post("https://telegrambot-pink.vercel.app/api/telegram", (req, res) => {
 	bot.processUpdate(req.body);
 	res.sendStatus(200);
 });
 
-bot.setWebHook("https://telegrambot-dusky.vercel.app/api/", {
+bot.setWebHook("https://telegrambot-pink.vercel.app/api/telegram", {
 	certificate: "path/to/certificate.pem",
 });
 
