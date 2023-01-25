@@ -45,10 +45,11 @@ const opts = {
 }); */
 
 // SETUP THE WEBHOOK
-app.post("https://telegrambot-dusky.vercel.app/", (req, res) => {
+app.post("/", (req, res) => {
 	bot.processUpdate(req.body);
 	res.sendStatus(200);
 });
+
 bot.setWebHook("https://telegrambot-dusky.vercel.app/", {
 	certificate: "path/to/certificate.pem",
 });
