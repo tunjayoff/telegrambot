@@ -9,7 +9,7 @@ const app = express();
 
 let gameOn = false;
 let currentWord = null;
-let words = [];
+let words = ["a", "b", "c", "d", "e"];
 let lastWinnerId;
 const opts = {
 	//OPTION BUTTONS
@@ -36,13 +36,13 @@ const opts = {
 };
 
 //read words from file
-fs.readFile("./words.txt", "utf8", function (err, data) {
+/* fs.readFile("./words.txt", "utf8", function (err, data) {
 	if (err) throw err;
 	words = data.toString().split("\r\n");
 	for (let i = 0; i < words.length; i++) {
 		words[i] = words[i].toLowerCase();
 	}
-});
+}); */
 
 // SETUP THE WEBHOOK
 app.post("https://telegrambot-dusky.vercel.app/", (req, res) => {
