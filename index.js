@@ -8,7 +8,6 @@ const token = process.env.tt;
 const bot = new TelegramBot(token);
 
 const app = express();
-app.use("/api/telegram", telegram);
 
 let gameOn = false;
 let currentWord = null;
@@ -39,12 +38,8 @@ const opts = {
 };
 
 // SETUP THE WEBHOOK
-app.post("https://telegrambot-rose.vercel.app/api/telegram", (req, res) => {
-	bot.processUpdate(req.body);
-	res.sendStatus(200);
-});
 
-bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {});
+bot.setWebHook("/api/telegram", {});
 
 bot.onText(/\/start@game_tabu_bot/, (msg) => {
 	// Send message with inline keyboard
