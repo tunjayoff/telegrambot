@@ -44,9 +44,7 @@ app.post("https://telegrambot-rose.vercel.app/api/telegram", (req, res) => {
 	res.sendStatus(200);
 });
 
-bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {
-	certificate: "path/to/certificate.pem",
-});
+bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {});
 
 bot.onText(/\/start@game_tabu_bot/, (msg) => {
 	// Send message with inline keyboard
