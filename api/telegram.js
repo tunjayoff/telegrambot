@@ -36,7 +36,10 @@ const opts = {
 };
 
 // SETUP THE WEBHOOK
-app.post("/api/telegram", bot.webhookCallback("/api/telegram"));
+app.post("/api/telegram", (req, res) => {
+	bot.processUpdate(req.body);
+	res.sendStatus(200);
+});
 
 bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {});
 
