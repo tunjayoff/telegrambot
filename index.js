@@ -1,5 +1,9 @@
 const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
+
+const telegram = require("./telegram");
+app.use("/api/telegram", telegram);
+
 require("dotenv").config();
 const token = process.env.tt;
 const bot = new TelegramBot(token);
@@ -33,15 +37,6 @@ const opts = {
 		],
 	},
 };
-
-//read words from file
-/* fs.readFile("./words.txt", "utf8", function (err, data) {
-	if (err) throw err;
-	words = data.toString().split("\r\n");
-	for (let i = 0; i < words.length; i++) {
-		words[i] = words[i].toLowerCase();
-	}
-}); */
 
 // SETUP THE WEBHOOK
 app.post("https://telegrambot-rose.vercel.app/api/telegram", (req, res) => {

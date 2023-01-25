@@ -35,24 +35,13 @@ const opts = {
 	},
 };
 
-//read words from file
-/* fs.readFile("./words.txt", "utf8", function (err, data) {
-	if (err) throw err;
-	words = data.toString().split("\r\n");
-	for (let i = 0; i < words.length; i++) {
-		words[i] = words[i].toLowerCase();
-	}
-}); */
-
 // SETUP THE WEBHOOK
-app.post("https://telegrambot-rose.vercel.app/api/telegram", (req, res) => {
+app.post("/api/telegram", (req, res) => {
 	bot.processUpdate(req.body);
 	res.sendStatus(200);
 });
 
-bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {
-	certificate: "path/to/certificate.pem",
-});
+bot.setWebHook("/api/telegram", {});
 
 bot.onText(/\/start@game_tabu_bot/, (msg) => {
 	// Send message with inline keyboard
