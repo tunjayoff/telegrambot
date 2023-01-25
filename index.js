@@ -1,7 +1,6 @@
 const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
 require("dotenv").config();
-const fs = require("fs");
 const token = process.env.tt;
 const bot = new TelegramBot(token);
 
@@ -45,12 +44,12 @@ const opts = {
 }); */
 
 // SETUP THE WEBHOOK
-app.post("https://telegrambot-pink.vercel.app/api/telegram", (req, res) => {
+app.post("https://telegrambot-rose.vercel.app/api/telegram", (req, res) => {
 	bot.processUpdate(req.body);
 	res.sendStatus(200);
 });
 
-bot.setWebHook("https://telegrambot-pink.vercel.app/api/telegram", {
+bot.setWebHook("https://telegrambot-rose.vercel.app/api/telegram", {
 	certificate: "path/to/certificate.pem",
 });
 

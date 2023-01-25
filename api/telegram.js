@@ -2,7 +2,6 @@ export default function handleTelegramWebhook(req, res) {
 	const TelegramBot = require("node-telegram-bot-api");
 	const express = require("express");
 	require("dotenv").config();
-	const fs = require("fs");
 	const token = process.env.tt;
 	const bot = new TelegramBot(token);
 
